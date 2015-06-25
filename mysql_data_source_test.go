@@ -2,7 +2,7 @@ package dsn
 
 import "testing"
 
-func TestToDsnString(t *testing.T) {
+func TestToDsnString_MySql(t *testing.T) {
 	ds := mysqlDataSource{
 		username: "username",
 		password: "password",
@@ -23,7 +23,7 @@ func TestToDsnString(t *testing.T) {
 	}
 }
 
-func TestToDsnString_Default(t *testing.T) {
+func TestToDsnString_MySql_Default(t *testing.T) {
 	ds := mysqlDataSource{
 		username: "username",
 		password: "password",
@@ -41,7 +41,7 @@ func TestToDsnString_Default(t *testing.T) {
 	}
 }
 
-func TestToDsnString_Socket(t *testing.T) {
+func TestToDsnString_MySql_Socket(t *testing.T) {
 	ds := mysqlDataSource{
 		username: "username",
 		password: "password",

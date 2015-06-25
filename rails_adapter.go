@@ -39,6 +39,18 @@ func (a railsAdapter) dataSourceFromReader(r io.Reader, env string) (dsnStringer
 			username: conf[env].Username,
 			password: conf[env].Password,
 		}, nil
+	case "postgresql":
+		return postgresqlDataSource{
+			host:     conf[env].Host,
+			port:     conf[env].Port,
+			dbname:   conf[env].Database,
+			user:     conf[env].Username,
+			password: conf[env].Password,
+		}, nil
+	case "sqlite3":
+		return sqliteDataSource{
+			dbname: conf[env].Database,
+		}, nil
 	}
 	return nil, nil
 }
