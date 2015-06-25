@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	s, _ := dsn.FromRailsConfig("/Users/miyakey/Documents/rails/hothub/config/database.yml", "production")
-	fmt.Printf("%s\n", s)
+	n, s, _ := dsn.FromRailsConfig("/Users/miyakey/Documents/rails/hothub/config/database.yml", "production")
+	fmt.Printf("%s -> %s\n", n, s)
 }

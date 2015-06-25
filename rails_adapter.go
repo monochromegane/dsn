@@ -10,15 +10,15 @@ import (
 
 type railsAdapter struct{}
 
-func (a railsAdapter) dsn(file, env string) (dsnStringer, error) {
+func (a railsAdapter) dataSource(file, env string) (dsnStringer, error) {
 	data, err := ioutil.ReadFile(file)
 	if err != nil {
 		return nil, err
 	}
-	return a.dsnFromReader(bytes.NewBuffer(data), env)
+	return a.dataSourceFromReader(bytes.NewBuffer(data), env)
 }
 
-func (a railsAdapter) dsnFromReader(r io.Reader, env string) (dsnStringer, error) {
+func (a railsAdapter) dataSourceFromReader(r io.Reader, env string) (dsnStringer, error) {
 	data, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, err
@@ -32,7 +32,7 @@ func (a railsAdapter) dsnFromReader(r io.Reader, env string) (dsnStringer, error
 
 	switch conf[env].Adapter {
 	case "mysql2":
-		return mysqlDsn{
+		return mysqlDataSource{
 			host:     conf[env].Host,
 			port:     conf[env].Port,
 			dbname:   conf[env].Database,

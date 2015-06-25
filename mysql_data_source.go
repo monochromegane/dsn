@@ -6,10 +6,10 @@ import (
 )
 
 type dsnStringer interface {
-	toDsnString() string
+	toDsnString() (string, string)
 }
 
-type mysqlDsn struct {
+type mysqlDataSource struct {
 	username string
 	password string
 	host     string
@@ -32,7 +32,7 @@ func (o options) toString() string {
 	return "?" + strings.Join(values, "&")
 }
 
-func (d mysqlDsn) address() string {
+func (d mysqlDataSource) address() string {
 	switch {
 	case d.socket != "":
 		return fmt.Sprintf("unix(%s)", d.socket)
@@ -41,26 +41,27 @@ func (d mysqlDsn) address() string {
 	}
 }
 
-func (d mysqlDsn) hostOrDefault() string {
+func (d mysqlDataSource) hostOrDefault() string {
 	if d.host == "" {
 		return "localhost"
 	}
 	return d.host
 }
 
-func (d mysqlDsn) portOrDefault() string {
+func (d mysqlDataSource) portOrDefault() string {
 	if d.port == "" {
 		return "3306"
 	}
 	return d.port
 }
 
-func (d mysqlDsn) toDsnString() string {
-	return fmt.Sprintf("%s:%s@%s/%s%s",
-		d.username,
-		d.password,
-		d.address(),
-		d.dbname,
-		d.options.toString(),
-	)
+func (d mysqlDataSource) toDsnString() (string, string) {
+	return "mysql",
+		fmt.Sprintf("%s:%s@%s/%s%s",
+			d.username,
+			d.password,
+			d.address(),
+			d.dbname,
+			d.options.toString(),
+		)
 }

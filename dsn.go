@@ -8,11 +8,12 @@ type Dsn struct {
 	Password string
 }
 
-func FromRailsConfig(file, env string) (string, error) {
+func FromRailsConfig(file, env string) (string, string, error) {
 	adapter := railsAdapter{}
-	dsn, err := adapter.dsn(file, env)
+	ds, err := adapter.dataSource(file, env)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	return dsn.toDsnString(), nil
+	name, dsn := ds.toDsnString()
+	return name, dsn, nil
 }
