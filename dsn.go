@@ -1,5 +1,9 @@
 package dsn
 
+type dsnStringer interface {
+	toDsnString() (string, string)
+}
+
 func FromRailsConfig(file, env string) (string, string, error) {
 	adapter := railsAdapter{}
 	ds, err := adapter.dataSource(file, env)

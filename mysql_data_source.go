@@ -5,10 +5,6 @@ import (
 	"strings"
 )
 
-type dsnStringer interface {
-	toDsnString() (string, string)
-}
-
 type mysqlDataSource struct {
 	username string
 	password string
